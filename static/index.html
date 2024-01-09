@@ -1,9 +1,400 @@
 <!DOCTYPE html>
 <html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Winner Selection</title>
+
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="https://kit.fontawesome.com/3ebc6f4032.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+
+    <link rel="stylesheet" href="./assets/css/app.css">
+</head>
+
 <body>
 
-<h1>My First Heading</h1>
-<p>My first paragraph.</p>
+    <main id="app" class="mx-auto">
+        <header class="p-4">
+            <div class="columns">
+                <div class="column has-text-centered">
+                    <img src="./assets/img/logo.webp" id="logo" />
+                </div>
+            </div>
+        </header>
+
+        <section class="p-4" id="comp-select">
+            <div class="columns">
+                <div class="column has-text-centered">
+                    <h2 class="mb-2">Select a competition</h2>
+                    <div class="select is-warning is-large">
+                        <select>
+                            <option>---</option>
+                            <option>Magneto Eric Gales RD3</option>
+                            <option>Laney Lionheart L20T-112 20W</option>
+                            <option>Ibanez 5 String Bass SR605E</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="p-4" id="comp-entries">
+            <div class="columns">
+                <div class="column">
+                    <div class="card has-background-dark has-text-white">
+                        <div class="card-content has-text-centered">
+                            <p class="has-text-weight-medium is-uppercase is-size-5">
+                                <i class="fa-solid fa-ticket mr-1 has-text-warning"></i>
+                                489 entries
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="card has-background-dark has-text-white">
+                        <div class="card-content has-text-centered">
+                            <p class="has-text-weight-medium is-uppercase is-size-5">
+                                <i class="fa-solid fa-users mr-1 has-text-warning"></i>
+                                150 unique
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="column">
+                    <div class="card has-background-dark has-text-white">
+                        <div class="card-content has-text-centered">
+                            <p class="has-text-weight-medium is-uppercase is-size-5">
+                                <i class="fa-solid fa-trophy mr-1 has-text-warning"></i>
+                                10 instant wins
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card mt-4">
+                <div class="card-content">
+                    <h3 class="has-text-centered">Entries</h3>
+                    <div class="mt-4" style="max-height: 350px; overflow-y: scroll;">
+                        <table class="table is-striped is-narrow is-fullwidth">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Ticket Number</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                                <tr>
+                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
+                                    <td>1234-56789</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
 </body>
+
 </html>
