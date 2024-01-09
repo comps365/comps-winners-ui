@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/comps365/comps-winners-ui/internal/handlers"
 	"github.com/labstack/echo"
 )
 
@@ -14,9 +15,11 @@ func main() {
 		e.Logger.Fatalf("unable to load config")
 	}
 
-	e.GET("/", func(c echo.Context) error {
-		return c.String(http.StatusOK, "Hello, World!")
-	})
+	pingHandler := handlers.NewPingHandler()
+
+	e.Static("/", "static")
+	g := e.Group("/api")
+	g.Add(http.MethodGet, "/ping", pingHandler.Ping)
 
 	e.Logger.Fatal(e.Start(fmt.Sprintf(":%s", Port)))
 }
