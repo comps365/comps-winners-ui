@@ -8,11 +8,6 @@ import (
 	"github.com/labstack/echo"
 )
 
-type LotteryResponse struct {
-	Id   int    `json:"id"`
-	Name string `json:"name"`
-}
-
 type LotteryHandler struct {
 	repo *repo.Repo
 }
@@ -21,6 +16,11 @@ func NewLotteryHandler(r *repo.Repo) *LotteryHandler {
 	return &LotteryHandler{
 		repo: r,
 	}
+}
+
+type LotteryResponse struct {
+	Id   int    `json:"id"`
+	Name string `json:"name"`
 }
 
 func (h *LotteryHandler) GetCompletedLotteries(c echo.Context) error {

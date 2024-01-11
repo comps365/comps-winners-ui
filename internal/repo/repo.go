@@ -20,9 +20,17 @@ func NewRepo(d *sqlx.DB, t string) *Repo {
 }
 
 func (r *Repo) GetCompletedLotteries() ([]models.Lottery, error) {
-	lotteries := []models.Lottery{}
-	if err := r.db.Select(&lotteries, buildCompletedLotteriesQuery(r.tablePrefix)); err != nil {
+	var ls []models.Lottery
+	if err := r.db.Select(&ls, buildCompletedLotteriesQuery(r.tablePrefix)); err != nil {
 		return nil, fmt.Errorf("unable to get lotteries, %w", err)
 	}
-	return lotteries, nil
+	return ls, nil
+}
+
+func (r *Repo) GetLotteryInstantWinTickets(lID int) ([]int, error) {
+	var iws []int
+	if err := r.db.Select(&iws, buildInstantWinsQuery(r.tablePrefix), lID); err != nil {
+		return nil, fmt.Errorf("unable to get instant win tickets for lottery %d, %v", lID, err)
+	}
+	return iws, nil
 }
