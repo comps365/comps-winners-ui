@@ -10,11 +10,11 @@ var (
 	Port   = getEnv("PORT", "1323")
 	LogLvl = getEnvInt("LOG_LVL", 1)
 
-	DBUser        = getEnv("DB_USER", "")
-	DBPass        = getEnv("DB_PASS", "")
-	DBServer      = getEnv("DB_SERVER", "")
-	DBPort        = getEnv("DB_PORT", "")
-	DBName        = getEnv("DB_NAME", "")
+	DBUser        = getEnv("DB_USER", "root")
+	DBPass        = getEnv("DB_PASS", "root")
+	DBServer      = getEnv("DB_SERVER", "localhost")
+	DBPort        = getEnv("DB_PORT", "8889")
+	DBName        = getEnv("DB_NAME", "guitarcomps")
 	DBTablePrefix = getEnv("DB_TABLE_PREFIX", "wp")
 
 	dbUserRequired   = errors.New("DB_USER is required")
