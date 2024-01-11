@@ -2,7 +2,11 @@ module github.com/comps365/comps-winners-ui
 
 go 1.20
 
-require github.com/labstack/echo v3.3.10+incompatible
+require (
+	github.com/go-sql-driver/mysql v1.7.1
+	github.com/jmoiron/sqlx v1.3.5
+	github.com/labstack/echo v3.3.10+incompatible
+)
 
 require (
 	github.com/labstack/gommon v0.4.2 // indirect
