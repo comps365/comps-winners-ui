@@ -17,23 +17,26 @@ func main() {
 	e := echo.New()
 
 	if err := loadConfig(); err != nil {
-		e.Logger.Fatalf("unable to load config")
+		e.Logger.Fatalf("unable to load config, %v", err)
 	}
 
 	e.Logger.SetLevel(log.Lvl(LogLvl))
 
-	db, err := sqlx.Connect("mysql", "root:root@(localhost:8889)/guitarcomps")
+	connStr := fmt.Sprintf("%s:%s@(%s:%s)/%s", DBUser, DBPass, DBServer, DBPort, DBName)
+	db, err := sqlx.Connect("mysql", connStr)
 	if err != nil {
 		e.Logger.Fatal(err)
 	}
 
-	repo := repo.NewRepo(db, "wp")
+	repo := repo.NewRepo(db, DBTablePrefix)
 
 	pingHandler := handlers.NewPingHandler()
+	lotteryHandler := handlers.NewLotteryHandler(repo)
 
 	e.Static("/", "static")
 	g := e.Group("/api")
 	g.Add(http.MethodGet, "/ping", pingHandler.Ping)
+	g.Add(http.MethodGet, "/lottery/completed", lotteryHandler.GetCompletedLotteries)
 
 	e.Logger.Fatal(e.Start(fmt.Sprintf(":%s", Port)))
 }
