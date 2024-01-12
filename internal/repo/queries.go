@@ -27,3 +27,14 @@ func buildInstantWinsQuery(prefix string) string {
 		GROUP BY instant_win_tickets
 	`, prefix)
 }
+
+func buildEntriesQuery(prefix string) string {
+	return fmt.Sprintf(`
+		SELECT o.billing_email AS email, om.meta_value AS entries
+		FROM %s_wc_orders AS o
+			JOIN wp_wc_order_product_lookup opl ON ( o.id = opl.order_id AND opl.product_id = ?)
+			JOIN wp_wc_orders_meta AS om ON o.id = om.order_id
+		WHERE 
+			om.meta_key = 'lty_ticket_ids_in_order'
+	`, prefix)
+}

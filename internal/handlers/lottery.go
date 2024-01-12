@@ -8,33 +8,33 @@ import (
 	"github.com/labstack/echo"
 )
 
-type LotteryHandler struct {
+type CompetitionHandler struct {
 	repo *repo.Repo
 }
 
-func NewLotteryHandler(r *repo.Repo) *LotteryHandler {
-	return &LotteryHandler{
+func NewCompetitionHandler(r *repo.Repo) *CompetitionHandler {
+	return &CompetitionHandler{
 		repo: r,
 	}
 }
 
-type LotteryResponse struct {
+type CompetitionResponse struct {
 	Id   int    `json:"id"`
 	Name string `json:"name"`
 }
 
-func (h *LotteryHandler) GetCompletedLotteries(c echo.Context) error {
-	l, err := h.repo.GetCompletedLotteries()
+func (h *CompetitionHandler) GetCompletedCompetitions(c echo.Context) error {
+	l, err := h.repo.GetCompletedCompetitions()
 	if err != nil {
 		return notOk(c, http.StatusInternalServerError, err)
 	}
-	return c.JSON(http.StatusOK, toLotteriesResponse(l))
+	return c.JSON(http.StatusOK, toCompsResponse(l))
 }
 
-func toLotteriesResponse(ls []models.Lottery) []LotteryResponse {
-	lrs := make([]LotteryResponse, len(ls))
+func toCompsResponse(ls []models.Competition) []CompetitionResponse {
+	lrs := make([]CompetitionResponse, len(ls))
 	for i, l := range ls {
-		lrs[i] = LotteryResponse{
+		lrs[i] = CompetitionResponse{
 			Id:   l.Id,
 			Name: l.Name,
 		}
