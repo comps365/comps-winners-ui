@@ -10,13 +10,14 @@
     <script src="https://kit.fontawesome.com/3ebc6f4032.js" crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
     <link rel="stylesheet" href="./assets/css/app.css">
 </head>
 
 <body>
 
-    <main id="app" class="mx-auto">
+    <main id="app" class="mx-auto mb-6">
         <header class="p-4">
             <div class="columns">
                 <div class="column has-text-centered">
@@ -25,30 +26,35 @@
             </div>
         </header>
 
-        <section class="p-4" id="comp-select">
+        <section class="p-4" id="comp-select" x-data>
             <div class="columns">
                 <div class="column has-text-centered">
                     <h2 class="mb-2 is-size-4">Select a competition</h2>
                     <div class="select is-warning is-large">
-                        <select>
+                        <select id="selected-comp">
                             <option>---</option>
-                            <option>Magneto Eric Gales RD3</option>
-                            <option>Laney Lionheart L20T-112 20W</option>
-                            <option>Ibanez 5 String Bass SR605E</option>
+                            <template x-for="comp in $store.comps">
+                                <option :value="comp.id"><span x-text="comp.name"></span><option>
+                            </template>
                         </select>
                     </div>
+                    <button class="button is-warning is-large" @click="handleSelectComp">Select</button>
                 </div>
             </div>
         </section>
 
-        <section class="p-4" id="comp-entries">
+        <section class="p-4 has-text-centered is-size-2" x-data x-show="$store.loading" x-transition>
+            <i class="fa-solid fa-spinner fa-spin"></i>
+        </section>
+
+        <section class="p-4" id="comp-entries" x-data x-show="$store.entries.length > 0" x-transition>
             <div class="columns">
                 <div class="column">
                     <div class="card has-background-dark has-text-white">
                         <div class="card-content has-text-centered">
                             <p class="has-text-weight-medium is-uppercase is-size-6">
                                 <i class="fa-solid fa-ticket mr-1 has-text-warning"></i>
-                                489 total entries
+                                <span x-text="$store.entries.length"></span> total entries
                             </p>
                         </div>
                     </div>
@@ -58,7 +64,7 @@
                         <div class="card-content has-text-centered">
                             <p class="has-text-weight-medium is-uppercase is-size-6">
                                 <i class="fa-solid fa-users mr-1 has-text-warning"></i>
-                                150 unique entries
+                                <span x-text="$store.uniqueEntries"></span> unique entries
                             </p>
                         </div>
                     </div>
@@ -68,7 +74,7 @@
                         <div class="card-content has-text-centered">
                             <p class="has-text-weight-medium is-uppercase is-size-6">
                                 <i class="fa-solid fa-trophy mr-1 has-text-warning"></i>
-                                10 instant wins
+                                <span x-text="$store.instantWins.length"></span> instant wins
                             </p>
                         </div>
                     </div>
@@ -79,18 +85,18 @@
                 <div class="card-content">
                     <div class="columns">
                         <div class="column">
-                            <h3 class="is-size-3">Entries</h3>
+                            <h3 class="is-size-3">Tickets</h3>
                         </div>
                         <div class="column">
                             <div class="field is-grouped is-justify-content-flex-end">
                                 <p class="control">
-                                    <button class="button is-warning">
+                                    <button class="button is-warning" @click="handleShuffleEntries" :class="$store.shuffling && 'is-loading'">
                                         <i class="fa-solid fa-shuffle mr-1"></i>
                                         Shuffle
                                     </button>
                                 </p>
                                 <p class="control">
-                                    <button class="button is-success">
+                                    <button class="button is-success" @click="$store.showModal.toggle()">
                                         <i class="fa-solid fa-trophy mr-1"></i>
                                         Select Winner
                                     </button>
@@ -102,311 +108,19 @@
                         <table class="table is-striped is-narrow is-fullwidth">
                             <thead>
                                 <tr>
+                                    <th>#</th>
                                     <th>Username</th>
                                     <th>Ticket Number</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
-                                <tr>
-                                    <td class="has-text-weight-medium">dev@guitarcomps.co.uk</td>
-                                    <td>1234-56789</td>
-                                </tr>
+                                <template x-for="(entry, idx) in $store.entries">
+                                    <tr>
+                                        <td><span x-text="idx+1"></span></td>
+                                        <td><span x-text="entry.email"></span></td>
+                                        <td><span x-text="entry.ticket"></span></td>
+                                    </tr>
+                                </template>
                             </tbody>
                         </table>
                     </div>
@@ -415,29 +129,153 @@
         </section>
     </main>
 
-    <div class="modal is-active" id="winner-modal">
+    <div class="modal" id="winner-modal" x-data :class="$store.showModal.on && 'is-active'" x-transition>
         <div class="modal-background"></div>
         <div class="modal-card">
             <header class="modal-card-head">
                 <p class="modal-card-title">Select Winner</p>
-                <button class="delete" aria-label="close"></button>
+                <button class="delete" aria-label="close" @click="$store.showModal.toggle()"></button>
             </header>
             
             <section class="modal-card-body">
-                <p>Total entries: 439</p>
+                <p>Total entries: <strong x-text="$store.entries.length"></strong></p>
                 <div class="box mt-2">
-                    <p class="has-text-centered has-text-weight-medium is-uppercase is-size-2" id="rand-ticket">ABC-1234567</p>
+                    <p 
+                        class="has-text-centered has-text-weight-medium is-uppercase is-size-2" 
+                        id="rand-ticket">???</p>
                 </div>
-
+                <p 
+                    class="mt-2 has-text-centered is-size-7" 
+                    x-show="!$store.selectedWinner" 
+                    x-transition>Time Left: <strong id="timer">10</strong>s</p>
             </section>
             <footer class="modal-card-foot is-justify-content-center">
-                <button class="button is-warning is-medium">Select Random Winner</button>
+                <button 
+                    class="button is-warning is-medium" 
+                    x-show="!$store.selectedWinner" 
+                    @click="handleStartWinnerSelection" 
+                    :class="$store.selectingWinner && 'is-loading'" 
+                    x-transition>Start</button>
+                <p class="is-size-4" x-show="$store.selectedWinner" x-transition>🎉 Congratulations 🎉</p>
             </footer>
         </div>
     </div>
 
     <script src="./assets/js/confetti.js"></script>
-    <script>poof()</script>
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('comps', [])
+            Alpine.store('instantWins', [])
+            Alpine.store('entries', [])
+            Alpine.store('uniqueEntries', 0)
+            Alpine.store('loading', false)
+            Alpine.store('shuffling', false)
+            Alpine.store('selectingWinner', false)
+            Alpine.store('selectedWinner', false)
+
+            Alpine.store('showModal', {
+                on: false,
+                toggle() {
+                    this.on = !this.on
+                }
+            })
+
+            getCompletedComps()
+        })
+
+        function getCompletedComps() {
+            fetchHttp('/api/competition/completed')
+                .then(async ([status, data]) => {
+                    let resp = await data
+                    Alpine.store('comps', resp)
+                })
+        }
+
+        function handleSelectComp(e) {
+            var s = document.getElementById('selected-comp');
+            var compID = s.value 
+
+            Alpine.store('loading', true)
+
+            fetchHttp(`/api/competition/${compID}`)
+                .then(async ([status, data]) => {
+                    let resp = await data
+                    Alpine.store('entries', resp.entries)
+                    Alpine.store('instantWins', resp.instantWins)
+                    Alpine.store('uniqueEntries', resp.uniqueEntries)
+                    Alpine.store('loading', false)
+                })
+
+        }
+
+        function handleShuffleEntries(e) {
+            Alpine.store('shuffling', true)
+            entries = Alpine.store('entries')
+            Alpine.store('entries', shuffle(entries))
+            Alpine.store('shuffling', false)
+        }
+
+        function handleStartWinnerSelection(e) {
+            Alpine.store('selectingWinner', true)
+            let array = Alpine.store('entries').map(e => e.ticket)
+    
+            let randTicket = document.getElementById('rand-ticket');
+            let timer = document.getElementById('timer');
+
+            let totalTime = 10000;
+            let intervalTime = 50;
+
+            let intervalId = setInterval(function() {
+                let randomElement = array[Math.floor(Math.random() * array.length)];
+
+                randTicket.textContent = randomElement;
+
+                let timePassed = Date.now() - startTime;
+                let timeLeft = totalTime - timePassed;
+                timer.textContent = Math.ceil(timeLeft / 1000)
+            }, intervalTime);
+
+            var startTime = Date.now();
+
+            setTimeout(function() {
+                clearInterval(intervalId);
+
+                Alpine.store('selectingWinner', false)
+                Alpine.store('selectedWinner', true)
+
+                randTicket.classList.add('animate__animated', 'animate__tada', 'animate__infinite');
+
+                poof();
+            }, totalTime);
+        }
+
+        // Fisher-Yates shuffle: https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle
+        function shuffle(arr) {
+            let idx = arr.length, randIdx;
+            while (idx > 0) {
+                randIdx = Math.floor(Math.random() * idx);
+                idx--;
+                [arr[idx], arr[randIdx]] = [
+                    arr[randIdx], arr[idx]];
+            }
+            return arr;
+        }
+
+        async function fetchHttp(url, jwt = '', method = 'GET', data = {}) {
+            const headers = {
+                'Content-Type': 'application/json',
+                // 'Authorization': `Bearer ${jwt}`
+            }
+            const response = (method == 'GET') ?
+                await fetch(url, { headers: headers }) :
+                await fetch(url, {
+                    method: method,
+                    headers: headers,
+                    body: JSON.stringify(data)
+                });
+            return [response.status, response.json()];
+        }
+    </script>
 
 </body>
 

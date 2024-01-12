@@ -26,11 +26,12 @@ type CompetitionResponse struct {
 }
 
 type CompetitionDetailsResponse struct {
-	InstantWins []string                   `json:"instantWins"`
-	Entries     []CompetitionEntryResponse `json:"entries"`
+	InstantWins   []string           `json:"instantWins"`
+	Entries       []CompetitionEntry `json:"entries"`
+	UniqueEntries int                `json:"uniqueEntries"`
 }
 
-type CompetitionEntryResponse struct {
+type CompetitionEntry struct {
 	Email  string `json:"email"`
 	Ticket string `json:"ticket"`
 }
@@ -60,23 +61,29 @@ func (h *CompetitionHandler) GetCompetitionDetails(c echo.Context) error {
 	}
 
 	iwsMap := toStrMap(iws)
-	ceResps := make([]CompetitionEntryResponse, 0)
+	ceResps := make([]CompetitionEntry, 0)
+	uniquesMap := make(map[string]bool, 0)
 	for _, e := range entries {
 		for _, t := range e.Tickets {
 			if _, ok := iwsMap[t]; ok {
 				// ignore tickets that are instant wins, we can't redraw them
 				continue
 			}
-			ceResps = append(ceResps, CompetitionEntryResponse{
+			ceResps = append(ceResps, CompetitionEntry{
 				Email:  e.Email,
 				Ticket: t,
 			})
+
+			if _, ok := uniquesMap[e.Email]; !ok {
+				uniquesMap[e.Email] = true
+			}
 		}
 	}
 
 	return c.JSON(http.StatusOK, &CompetitionDetailsResponse{
-		InstantWins: iws,
-		Entries:     ceResps,
+		InstantWins:   iws,
+		Entries:       ceResps,
+		UniqueEntries: len(uniquesMap),
 	})
 }
 

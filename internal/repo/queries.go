@@ -23,6 +23,7 @@ func buildInstantWinsQuery(prefix string) string {
 			JOIN wp_postmeta AS pm ON p.ID = pm.post_id
 		WHERE
 			p.post_parent = ?
+			AND p.post_type = 'lty_instant_winners'
 			AND pm.meta_key = 'lty_ticket_number'
 		GROUP BY instant_win_tickets
 	`, prefix)

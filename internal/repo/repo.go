@@ -44,7 +44,7 @@ func (r *Repo) GetCompletedCompetitions() ([]models.Competition, error) {
 }
 
 func (r *Repo) GetCompetitionInstantWinTickets(lID int) ([]string, error) {
-	var iws []string
+	iws := make([]string, 0)
 	if err := r.db.Select(&iws, buildInstantWinsQuery(r.tablePrefix), lID); err != nil {
 		return nil, fmt.Errorf("unable to get instant win tickets for lottery %d, %w", lID, err)
 	}

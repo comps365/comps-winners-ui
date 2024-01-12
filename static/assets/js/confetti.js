@@ -176,8 +176,7 @@
       document.body.appendChild(container);
 
       // Add confetti
-      var theme = colorThemes[0]
-        , count = 0;
+      var theme = colorThemes[0], count = 0;
       (function addConfetto() {
         var confetto = new Confetto(theme);
         confetti.push(confetto);
