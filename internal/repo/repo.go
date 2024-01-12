@@ -53,8 +53,10 @@ func (r *Repo) GetCompetitionInstantWinTickets(lID int) ([]string, error) {
 
 func (r *Repo) GetEntriesForCompetition(cID int) ([]models.CompetitionEntry, error) {
 	type compEntryRow struct {
-		Email   string
-		Entries string
+		FirstName string `db:"first_name"`
+		LastName  string `db:"last_name"`
+		Email     string `db:"email"`
+		Tickets   string `db:"tickets"`
 	}
 
 	var ers []compEntryRow
@@ -65,8 +67,10 @@ func (r *Repo) GetEntriesForCompetition(cID int) ([]models.CompetitionEntry, err
 	ces := make([]models.CompetitionEntry, len(ers))
 	for i, er := range ers {
 		ces[i] = models.CompetitionEntry{
-			Email:   er.Email,
-			Tickets: parseInput(er.Entries),
+			FirstName: er.FirstName,
+			LastName:  er.LastName,
+			Email:     er.Email,
+			Tickets:   parseInput(er.Tickets),
 		}
 	}
 

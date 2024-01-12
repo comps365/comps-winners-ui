@@ -109,7 +109,7 @@
                             <thead>
                                 <tr>
                                     <th>#</th>
-                                    <th>Username</th>
+                                    <th>Name</th>
                                     <th>Ticket Number</th>
                                 </tr>
                             </thead>
@@ -117,7 +117,7 @@
                                 <template x-for="(entry, idx) in $store.entries">
                                     <tr>
                                         <td><span x-text="idx+1"></span></td>
-                                        <td><span x-text="entry.email"></span></td>
+                                        <td><span x-text="entry.name"></span></td>
                                         <td><span x-text="entry.ticket"></span></td>
                                     </tr>
                                 </template>
@@ -156,7 +156,7 @@
                     @click="handleStartWinnerSelection" 
                     :class="$store.selectingWinner && 'is-loading'" 
                     x-transition>Start</button>
-                <p class="is-size-4" x-show="$store.selectedWinner" x-transition>🎉 Congratulations 🎉</p>
+                <p class="is-size-4" x-show="$store.selectedWinner" x-transition>🎉 Congratulations <strong x-text="$store.winnerName"></strong> 🎉</p>
             </footer>
         </div>
     </div>
@@ -172,6 +172,7 @@
             Alpine.store('shuffling', false)
             Alpine.store('selectingWinner', false)
             Alpine.store('selectedWinner', false)
+            Alpine.store('winnerName', '')
 
             Alpine.store('showModal', {
                 on: false,
@@ -217,35 +218,41 @@
 
         function handleStartWinnerSelection(e) {
             Alpine.store('selectingWinner', true)
-            let array = Alpine.store('entries').map(e => e.ticket)
+            let tickets = Alpine.store('entries').map(e => e.ticket)
     
             let randTicket = document.getElementById('rand-ticket');
             let timer = document.getElementById('timer');
 
             let totalTime = 10000;
             let intervalTime = 50;
+            var winningIdx = -1;
 
             let intervalId = setInterval(function() {
-                let randomElement = array[Math.floor(Math.random() * array.length)];
+                let randIdx = Math.floor(Math.random() * tickets.length)
+                winningIdx = randIdx
+                let randElement = tickets[randIdx]
 
-                randTicket.textContent = randomElement;
+                randTicket.textContent = randElement
 
-                let timePassed = Date.now() - startTime;
-                let timeLeft = totalTime - timePassed;
+                let timePassed = Date.now() - startTime
+                let timeLeft = totalTime - timePassed
                 timer.textContent = Math.ceil(timeLeft / 1000)
             }, intervalTime);
 
-            var startTime = Date.now();
+            var startTime = Date.now()
 
             setTimeout(function() {
-                clearInterval(intervalId);
+                clearInterval(intervalId)
+
+                poof();
+
+                let winner = Alpine.store('entries')[winningIdx]
+                Alpine.store('winnerName', winner.name)
 
                 Alpine.store('selectingWinner', false)
                 Alpine.store('selectedWinner', true)
 
                 randTicket.classList.add('animate__animated', 'animate__tada', 'animate__infinite');
-
-                poof();
             }, totalTime);
         }
 

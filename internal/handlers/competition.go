@@ -32,6 +32,7 @@ type CompetitionDetailsResponse struct {
 }
 
 type CompetitionEntry struct {
+	Name   string `json:"name"`
 	Email  string `json:"email"`
 	Ticket string `json:"ticket"`
 }
@@ -70,6 +71,7 @@ func (h *CompetitionHandler) GetCompetitionDetails(c echo.Context) error {
 				continue
 			}
 			ceResps = append(ceResps, CompetitionEntry{
+				Name:   fmt.Sprintf("%s %s", e.FirstName, e.LastName),
 				Email:  e.Email,
 				Ticket: t,
 			})
@@ -101,11 +103,11 @@ func toCompsResponse(ls []models.Competition) []CompetitionResponse {
 func validateIntID(id string) (int, error) {
 	i, err := strconv.Atoi(id)
 	if err != nil {
-		return -1, fmt.Errorf("unable to parse %s, %v", id, err)
+		return -1, fmt.Errorf("unable to parse %s, %w", id, err)
 	}
 
 	if i < 1 {
-		return -1, fmt.Errorf("%d is not a valid ID", i, err)
+		return -1, fmt.Errorf("%d is not a valid ID, %w", i, err)
 	}
 
 	return i, nil

@@ -6,6 +6,8 @@ type Competition struct {
 }
 
 type CompetitionEntry struct {
-	Email   string
-	Tickets []string
+	FirstName string
+	LastName  string
+	Email     string
+	Tickets   []string
 }
