@@ -30,10 +30,6 @@ func main() {
 
 	repo := repo.NewRepo(db, DBTablePrefix)
 
-	iw, err := repo.GetEntriesForCompetition(104)
-	e.Logger.Error(err)
-	e.Logger.Debugf("iws=%s", iw)
-
 	pingHandler := handlers.NewPingHandler()
 	compHandler := handlers.NewCompetitionHandler(repo)
 
@@ -41,6 +37,7 @@ func main() {
 	g := e.Group("/api")
 	g.Add(http.MethodGet, "/ping", pingHandler.Ping)
 	g.Add(http.MethodGet, "/competition/completed", compHandler.GetCompletedCompetitions)
+	g.Add(http.MethodGet, "/competition/:id", compHandler.GetCompetitionDetails)
 
 	e.Logger.Fatal(e.Start(fmt.Sprintf(":%s", Port)))
 }
