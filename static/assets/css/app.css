@@ -4,6 +4,8 @@ body {
     font-family: 'Rubik', sans-serif;
 }
 
+[x-cloak] { display: none !important; }
+
 #app {
     width: 100%;
     max-width: 900px;

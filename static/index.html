@@ -6,13 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Winner Selection</title>
 
-    <script src="//unpkg.com/alpinejs" defer></script>
-    <script src="https://kit.fontawesome.com/3ebc6f4032.js" crossorigin="anonymous"></script>
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
-
     <link rel="stylesheet" href="./assets/css/app.css">
+
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="https://kit.fontawesome.com/3ebc6f4032.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -43,11 +42,11 @@
             </div>
         </section>
 
-        <section class="p-4 has-text-centered is-size-2" x-data x-show="$store.loading" x-transition>
+        <section class="p-4 has-text-centered is-size-2" x-data x-cloak x-show="$store.loading"  x-transition>
             <i class="fa-solid fa-spinner fa-spin"></i>
         </section>
 
-        <section class="p-4" id="comp-entries" x-data x-show="$store.entries.length > 0" x-transition>
+        <section class="p-4" id="comp-entries" x-data x-cloak x-show="$store.entries.length > 0" x-transition>
             <div class="columns">
                 <div class="column">
                     <div class="card has-background-dark has-text-white">
