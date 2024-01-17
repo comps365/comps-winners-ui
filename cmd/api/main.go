@@ -7,7 +7,8 @@ import (
 	"github.com/comps365/comps-winners-ui/internal/handlers"
 	"github.com/comps365/comps-winners-ui/internal/repo"
 	_ "github.com/go-sql-driver/mysql"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
 
 	"github.com/jmoiron/sqlx"
@@ -15,6 +16,9 @@ import (
 
 func main() {
 	e := echo.New()
+
+	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
 
 	if err := loadConfig(); err != nil {
 		e.Logger.Fatalf("unable to load config, %v", err)

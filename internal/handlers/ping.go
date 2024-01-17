@@ -3,10 +3,10 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
-type PingHandler struct {}
+type PingHandler struct{}
 
 func NewPingHandler() *PingHandler {
 	return &PingHandler{}
@@ -15,3 +15,4 @@ func NewPingHandler() *PingHandler {
 func (h *PingHandler) Ping(c echo.Context) error {
 	return c.JSON(http.StatusOK, "PONG")
 }
+

@@ -7,7 +7,7 @@ import (
 
 	"github.com/comps365/comps-winners-ui/internal/models"
 	"github.com/comps365/comps-winners-ui/internal/repo"
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 )
 
 type CompetitionHandler struct {

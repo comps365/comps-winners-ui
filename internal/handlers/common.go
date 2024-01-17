@@ -1,6 +1,6 @@
 package handlers
 
-import "github.com/labstack/echo"
+import "github.com/labstack/echo/v4"
 
 type errResponse struct {
 	Message string `json:"msg"`
