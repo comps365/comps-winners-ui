@@ -1,7 +1,7 @@
 package main
 
 import (
-	"errors"
+	"fmt"
 	"os"
 	"strconv"
 )
@@ -17,32 +17,42 @@ var (
 	DBName        = getEnv("DB_NAME", "guitarcomps")
 	DBTablePrefix = getEnv("DB_TABLE_PREFIX", "wp")
 
-	dbUserRequired   = errors.New("DB_USER is required")
-	dbPassRequired   = errors.New("DB_PASS is required")
-	dbServerRequired = errors.New("DB_SERVER is required")
-	dbPortRequired   = errors.New("DB_PORT is required")
-	dbNameRequired   = errors.New("DB_NAME is required")
+	SigningKey = getEnvByteSlice("SIGNING_KEY", []byte("secret"))
+	AppUser    = getEnv("APP_USER", "admin")
+	AppPass    = getEnv("APP_PASS", "admin")
 )
 
 func loadConfig() error {
 	if DBUser == "" {
-		return dbUserRequired
+		return missingConfig("DB_USER")
 	}
 
 	if DBPass == "" {
-		return dbPassRequired
+		return missingConfig("DB_PASS")
 	}
 
 	if DBServer == "" {
-		return dbServerRequired
+		return missingConfig("DB_SERVER")
 	}
 
 	if DBPort == "" {
-		return dbPortRequired
+		return missingConfig("DB_PORT")
 	}
 
 	if DBName == "" {
-		return dbNameRequired
+		return missingConfig("DB_NAME")
+	}
+
+	if SigningKey == nil {
+		return missingConfig("SIGNING_KEY")
+	}
+
+	if AppUser == "" {
+		return missingConfig("APP_USER")
+	}
+
+	if AppPass == "" {
+		return missingConfig("APP_PASS")
 	}
 
 	return nil
@@ -67,4 +77,16 @@ func getEnvInt(key string, def int) int {
 		return def
 	}
 	return v
+}
+
+func getEnvByteSlice(key string, def []byte) []byte {
+	val := getEnv(key, "")
+	if val == "" {
+		return def
+	}
+	return []byte(val)
+}
+
+func missingConfig(key string) error {
+	return fmt.Errorf("missing %s", key)
 }

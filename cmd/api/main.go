@@ -7,6 +7,8 @@ import (
 	"github.com/comps365/comps-winners-ui/internal/handlers"
 	"github.com/comps365/comps-winners-ui/internal/repo"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/golang-jwt/jwt/v5"
+	echojwt "github.com/labstack/echo-jwt/v4"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"github.com/labstack/gommon/log"
@@ -17,6 +19,7 @@ import (
 func main() {
 	e := echo.New()
 
+	e.HideBanner = true
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
@@ -36,12 +39,22 @@ func main() {
 
 	pingHandler := handlers.NewPingHandler()
 	compHandler := handlers.NewCompetitionHandler(repo)
+	authHandler := handlers.NewAuthHandler(SigningKey, AppUser, AppPass)
 
 	e.Static("/", "static")
 	g := e.Group("/api")
-	g.Add(http.MethodGet, "/ping", pingHandler.Ping)
-	g.Add(http.MethodGet, "/competition/completed", compHandler.GetCompletedCompetitions)
-	g.Add(http.MethodGet, "/competition/:id", compHandler.GetCompetitionDetails)
+
+	authMiddleware := echojwt.WithConfig(echojwt.Config{
+		NewClaimsFunc: func(c echo.Context) jwt.Claims {
+			return new(handlers.JWTCustomClaims)
+		},
+		SigningKey: []byte("secret"),
+	})
+
+	g.Add(http.MethodGet, "/ping", pingHandler.Ping, authMiddleware)
+	g.Add(http.MethodGet, "/competition/completed", compHandler.GetCompletedCompetitions, authMiddleware)
+	g.Add(http.MethodGet, "/competition/:id", compHandler.GetCompetitionDetails, authMiddleware)
+	g.Add(http.MethodPost, "/auth/login", authHandler.Login)
 
 	e.Logger.Fatal(e.Start(fmt.Sprintf(":%s", Port)))
 }
