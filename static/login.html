@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Winner Selection | Login</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+    <link rel="stylesheet" href="./assets/css/app.css">
+
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <script src="https://kit.fontawesome.com/3ebc6f4032.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <main id="app" class="container" style="max-width: 500px">
+        <header class="p-4">
+            <div class="columns">
+                <div class="column has-text-centered">
+                    <img src="./assets/img/logo.webp" id="logo" />
+                </div>
+            </div>
+        </header>
+
+
+        <section class="p-4" id="login">
+            <div class="card">
+                <div class="card-content">
+                    <div id="login-form"  x-data="{
+                        username: '',
+                        password: ''
+                    }">
+                        <div class="field">
+                            <label class="label">Username</label>
+                            <div class="control has-icons-left has-icons-right">
+                                <input class="input" type="text" placeholder="john" x-model="username" @keyup.enter="signIn($data)" required>
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Password</label>
+                            <div class="control has-icons-left has-icons-right">
+                                <input class="input" type="password" placeholder="######" x-model="password" @keyup.enter="signIn($data)" required>
+                                <span class="icon is-small is-left">
+                                    <i class="fas fa-lock"></i>
+                                </span>
+                            </div>
+                        </div>
+
+                        <button class="button is-fullwidth is-warning" :class="$store.isLoading && 'is-loading'" @click="signIn($data)">Login</button>
+
+                        <article class="message is-danger mt-2" x-cloak x-transition x-show="$store.hasError">
+                            <div class="message-body" x-text="$store.errorMsg"></div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('alpine:init', () => {
+            Alpine.store('isLoading', false)
+            Alpine.store('hasError', false)
+            Alpine.store('errorMsg', '')
+        })
+
+        function signIn({username, password}) {
+            Alpine.store('isLoading', true)
+
+            fetch('/api/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ "username": username, "password": password})
+            })
+                .then(response => response.json())
+                .then(response => {
+                    console.log(response)
+                    if(!response.token) {
+                        Alpine.store('hasError', true)
+                        Alpine.store('errorMsg', response.msg)
+                        Alpine.store('isLoading', false)
+                        return
+                    }
+                    Alpine.store('hasError', false)
+                    localStorage.setItem("jwt", response.token);
+                    window.location.replace("/")
+                })
+        }
+
+        async function fetchHttp(url, jwt = '', method = 'GET', data = {}) {
+            const headers = {
+                'Content-Type': 'application/json',
+            }
+            const response = (method == 'GET') ?
+                await fetch(url, { headers: headers }) :
+                await fetch(url, {
+                    method: method,
+                    headers: headers,
+                    body: JSON.stringify(data)
+                });
+            return [response.status, response.json()];
+        }
+    </script>
+
+</body>
+
+</html>

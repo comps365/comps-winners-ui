@@ -6,10 +6,10 @@ body {
 
 [x-cloak] { display: none !important; }
 
-#app {
-    width: 100%;
-    max-width: 900px;
-}
+/* #app { */
+/*     width: 100%; */
+/*     max-width: 900px; */
+/* } */
 
 #logo {
     max-width: 330px;
